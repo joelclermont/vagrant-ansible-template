@@ -1,0 +1,22 @@
+---
+- name: init | Update apt
+  apt: update_cache=yes
+
+- name: init | Install Sys Packages
+  apt: pkg={{ item }} state=latest
+  with_items: sys_packages
+
+- name: init | make sure python-software-properties is installed
+  apt: pkg=python-software-properties state=latest
+
+- name: init | Add ppa Repository for latest stable php
+  apt_repository: repo='ppa:ondrej/php5'
+
+- name: init | Add ppa Repository for mysql 5.6
+  apt_repository: repo='ppa:ondrej/mysql-5.6'
+
+- name: init | Add ppa Repository for composer
+  apt_repository: repo='ppa:duggan/composer'
+
+- name: init | Update apt
+  apt: update_cache=yes

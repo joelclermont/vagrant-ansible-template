@@ -1,0 +1,26 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    doc_root: /vagrant/code/public
+    sys_packages: [ 'curl', 'vim', 'git', 'rubygems']
+    php_packages: [ 'php5-curl', 'php5-mcrypt', 'php5-cli', 'php5-mysql', 'php5-composer' ]
+    mysql_root_pass: **enter_root_pass**
+    mysql_app_pass: **enter_app_pass**
+  tasks:
+    - include: tasks/init.yml
+    - include: tasks/mysql.yml
+    - include: tasks/nginxphp.yml
+    - include: tasks/ssh.yml
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+    - name: restart mysql
+      service: name=mysql state=restarted
+
+    - name: restart php5-fpm
+      service: name=php5-fpm state=restarted
+
+    - name: seed database
+      mysql_db: name=**enter_db_name** state=import target=**/vagrant/data/some-dump-file.sql**

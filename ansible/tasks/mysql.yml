@@ -1,0 +1,33 @@
+---
+- name: mysql | Install mysql server
+  apt: pkg=mysql-server state=latest
+
+- name: mysql | Install mysql client
+  apt: pkg=mysql-client state=latest
+
+- name: mysql | Install python mysql bindings
+  apt: pkg=python-mysqldb state=latest
+
+- name: update mysql root password for all root accounts
+  mysql_user: name=root host={{ item }} password={{ mysql_root_pass }}
+  with_items:
+    - $ansible_hostname
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: copy .my.cnf file with root password credentials
+  template: src=files/mysql/my.cnf dest=/root/.my.cnf owner=root mode=0600
+
+- name: delete anonymous MySQL server user for $server_hostname
+  action: mysql_user user="" host="$server_hostname" state="absent"
+
+- name: delete anonymous MySQL server user for localhost
+  action: mysql_user user="" state="absent"
+
+- name: setup application database
+  mysql_db: name=**enter_db_name** state=present
+  notify: seed database
+
+- name: setup application user
+  mysql_user: name=**enter_user_name** password={{ mysql_app_pass }} priv=**enter_db_name**.*:ALL state=present
