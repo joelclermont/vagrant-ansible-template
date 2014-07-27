@@ -1,12 +1,13 @@
 Vagrant.configure("2") do |config|
 
+    # parallels is optional, feel free to use virtualbox for local dev
     config.vm.provider "parallels" do |v|
         v.name = "**enter_custom_box_name**"
     end
 
     config.vm.define "local", primary: true do |local|
 
-        local.vm.box = "parallels/ubuntu-12.04"
+        local.vm.box = "parallels/ubuntu-12.04" # change this to any box you want
 
         local.vm.network :private_network, ip: "192.168.33.102"
 
