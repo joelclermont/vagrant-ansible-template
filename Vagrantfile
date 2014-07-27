@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
             provider.client_id = "**enter_your_client_id**"
             provider.api_key = "**enter_your_api_key**"
             provider.image = "Ubuntu 12.04.4 x64"
-            provider.region = "New York 2"
+            provider.region = "San Francisco 1"
             provider.size = "1GB"
         end
 
@@ -47,4 +47,29 @@ Vagrant.configure("2") do |config|
         end
     end
 
+    config.vm.define "prod" do |prod|
+
+        prod.vm.box = "digital_ocean"
+        prod.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+        prod.vm.hostname = "**domain.com**"
+
+        prod.vm.synced_folder "./", "/vagrant", disabled: true
+
+        prod.vm.provider :digital_ocean do |provider, override|
+            override.ssh.private_key_path = "~/.ssh/id_rsa"
+            provider.client_id = "**enter_your_client_id**"
+            provider.api_key = "**enter_your_api_key**"
+            provider.image = "Ubuntu 12.04.4 x64"
+            provider.region = "New York 2"
+            provider.size = "1GB"
+        end
+
+        config.vm.provision "ansible" do |ansible|
+            ansible.extra_vars = {
+                server_name: "**enter_your_public_server_ip**",
+                application_env: "prod"
+            }
+            ansible.playbook = "ansible/playbook.yml"
+        end
+    end
 end
