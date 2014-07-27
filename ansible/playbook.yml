@@ -9,6 +9,9 @@
     mysql_root_pass: **enter_root_pass**
     mysql_app_user: **enter_app_user**
     mysql_app_pass: **enter_app_pass**
+    s3_bucket_name: **enter_bucket_name**
+    scp_user: **enter_scp_user**
+    scp_host: **enter_scp_host**
   tasks:
     - include: tasks/init.yml
     - include: tasks/mysql.yml
@@ -26,4 +29,4 @@
 
     # since we're not syncing files to test and prod, the seed will not work in those environments
     - name: seed database
-      mysql_db: name=**enter_db_name** state=import target=**/vagrant/data/seed-database.sql**
+      mysql_db: name={{ mysql_db_name }} state=import target=/vagrant/data/seed-database.sql

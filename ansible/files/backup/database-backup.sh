@@ -15,6 +15,6 @@ cd ~/
 tar cvzf $BACKUPFILE.tgz $BACKUPFILE
 rm $BACKUPFILE
 
-s3cmd put $BACKUPFILE.tgz s3://**bucket_name**/$BACKUPFILE.tgz
-# scp $BACKUPFILE.tgz root@107.170.203.167:/backup
+s3cmd put $BACKUPFILE.tgz s3://{{ s3_bucket_name }}/$BACKUPFILE.tgz
+# scp $BACKUPFILE.tgz {{ scp_user }}@{{ scp_host }}:/backup
 rm $BACKUPFILE.tgz
