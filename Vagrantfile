@@ -1,8 +1,17 @@
+# all the variables you need to set are listed here
+box_name                = ""
+test_host_name          = ""
+test_ip                 = ""
+prod_host_name          = ""
+prod_ip                 = ""
+digital_ocean_client_id = ""
+digital_ocean_api_key   = ""
+
 Vagrant.configure("2") do |config|
 
     # parallels is optional, feel free to use virtualbox for local dev
     config.vm.provider "parallels" do |v|
-        v.name = "**enter_custom_box_name**"
+        v.name = box_name
     end
 
     config.vm.define "local", primary: true do |local|
@@ -26,7 +35,7 @@ Vagrant.configure("2") do |config|
 
         test.vm.box = "digital_ocean"
         test.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-        test.vm.hostname = "**test.domain.com**"
+        test.vm.hostname = test_host_name
 
         # do not allow vagrant to sync files
         # use some other mechanism (like git) to deploy files
@@ -34,8 +43,8 @@ Vagrant.configure("2") do |config|
 
         test.vm.provider :digital_ocean do |provider, override|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
-            provider.client_id = "**enter_your_client_id**"
-            provider.api_key = "**enter_your_api_key**"
+            provider.client_id = digital_ocean_client_id
+            provider.api_key = digital_ocean_api_key
             provider.image = "Ubuntu 12.04.4 x64"
             provider.region = "San Francisco 1"
             provider.size = "1GB"
@@ -43,7 +52,7 @@ Vagrant.configure("2") do |config|
 
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
-                server_name: "**enter_your_public_server_ip**",
+                server_name: test_ip,
                 application_env: "testing"
             }
             ansible.playbook = "ansible/playbook.yml"
@@ -54,7 +63,7 @@ Vagrant.configure("2") do |config|
 
         prod.vm.box = "digital_ocean"
         prod.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
-        prod.vm.hostname = "**domain.com**"
+        prod.vm.hostname = prod_host_name
 
         # do not allow vagrant to sync files
         # use some other mechanism (like git) to deploy files
@@ -62,8 +71,8 @@ Vagrant.configure("2") do |config|
 
         prod.vm.provider :digital_ocean do |provider, override|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
-            provider.client_id = "**enter_your_client_id**"
-            provider.api_key = "**enter_your_api_key**"
+            provider.client_id = digital_ocean_client_id
+            provider.api_key = digital_ocean_api_key
             provider.image = "Ubuntu 12.04.4 x64"
             provider.region = "New York 2"
             provider.size = "1GB"
@@ -71,7 +80,7 @@ Vagrant.configure("2") do |config|
 
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
-                server_name: "**enter_your_public_server_ip**",
+                server_name: prod_ip,
                 application_env: "prod"
             }
             ansible.playbook = "ansible/playbook.yml"
