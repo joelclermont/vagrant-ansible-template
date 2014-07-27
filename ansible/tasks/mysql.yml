@@ -26,8 +26,8 @@
   action: mysql_user user="" state="absent"
 
 - name: setup application database
-  mysql_db: name=**enter_db_name** state=present
+  mysql_db: name={{ mysql_db_name }} state=present
   notify: seed database
 
 - name: setup application user
-  mysql_user: name=**enter_user_name** password={{ mysql_app_pass }} priv=**enter_db_name**.*:ALL state=present
+  mysql_user: name={{ mysql_app_user }} password={{ mysql_app_pass }} priv={{ mysql_db_name }}.*:ALL state=present
