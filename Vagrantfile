@@ -27,6 +27,8 @@ Vagrant.configure("2") do |config|
         test.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
         test.vm.hostname = "**test.domain.com**"
 
+        # do not allow vagrant to sync files
+        # use some other mechanism (like git) to deploy files
         test.vm.synced_folder "./", "/vagrant", disabled: true
 
         test.vm.provider :digital_ocean do |provider, override|
@@ -53,6 +55,8 @@ Vagrant.configure("2") do |config|
         prod.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
         prod.vm.hostname = "**domain.com**"
 
+        # do not allow vagrant to sync files
+        # use some other mechanism (like git) to deploy files
         prod.vm.synced_folder "./", "/vagrant", disabled: true
 
         prod.vm.provider :digital_ocean do |provider, override|

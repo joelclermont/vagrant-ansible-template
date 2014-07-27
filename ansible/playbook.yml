@@ -22,5 +22,6 @@
     - name: restart php5-fpm
       service: name=php5-fpm state=restarted
 
+    # since we're not syncing files to test and prod, the seed will not work in those environments
     - name: seed database
-      mysql_db: name=**enter_db_name** state=import target=**/vagrant/data/some-dump-file.sql**
+      mysql_db: name=**enter_db_name** state=import target=**/vagrant/data/seed-database.sql**
