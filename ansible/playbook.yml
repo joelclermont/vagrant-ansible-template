@@ -5,11 +5,13 @@
     doc_root: /vagrant/code/public
     sys_packages: [ 'curl', 'vim', 'git', 'rubygems', 's3cmd']
     php_packages: [ 'php5-curl', 'php5-mcrypt', 'php5-cli', 'php5-mysql', 'php5-composer' ]
-    mysql_db_name: **enter_db_name**
+    mysql_db_names: [' **enter_db1_name**', '**enter_db2_name**']
     mysql_root_pass: **enter_root_pass**
     mysql_app_user: **enter_app_user**
     mysql_app_pass: **enter_app_pass**
     s3_bucket_name: **enter_bucket_name**
+    s3_api_key: **enter_s3_api_key**
+    s3_api_secret_key: **enter_s3_secret**
     scp_user: **enter_scp_user**
     scp_host: **enter_scp_host**
   tasks:
@@ -17,6 +19,9 @@
     - include: tasks/mysql.yml
     - include: tasks/nginxphp.yml
     - include: tasks/ssh.yml
+    - include: tasks/backup.yml
+      when: application_env == "production"
+
   handlers:
     - name: restart nginx
       service: name=nginx state=restarted

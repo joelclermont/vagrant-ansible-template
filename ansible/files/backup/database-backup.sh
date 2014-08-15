@@ -7,7 +7,7 @@ fi
 
 BACKUPFILE=full-$TYPE-backup-$(date -d "today" +"%Y-%m-%d-%H%M").sql
 
-mysqldump -u root --password="{{ mysql_root_pass }}" --single-transaction --databases {{ mysql_db_name }} > ~/$BACKUPFILE
+mysqldump -u root --password="{{ mysql_root_pass }}" --single-transaction --databases{% for db in mysql_db_names %} {{ db }}{% endfor %} > ~/$BACKUPFILE
 
 mysqladmin -u root --password="{{ mysql_root_pass }}" flush-logs
 
