@@ -9,6 +9,10 @@
   template: src=files/nginx/default.tpl dest=/etc/nginx/sites-available/default
   notify: restart nginx
 
+- name: fpm config
+  template: src=files/php-fpm/www.conf dest=/etc/php5/fpm/pool.d/www.conf
+  notify: restart php5-fpm
+
 - name: nginxphp | Install PHP Packages
   apt: pkg={{ item }} state=latest
   with_items: php_packages
