@@ -5,6 +5,9 @@
 - name: make sure www-data home directory exists
   file: path=/var/www/.ssh owner=www-data group=www-data mode=0700 state=directory
 
+- name: set bash as default shell for www-data
+  user: name=www-data shell=/bin/bash
+
 - name: ssh | setup ssh access for www-data user
   authorized_key: user=www-data key="{{ item }}"
   with_file:
