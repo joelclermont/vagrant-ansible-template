@@ -1,5 +1,6 @@
 # all the variables you need to set are listed here
 box_name                = ""
+local_host_name         = ""
 test_host_name          = ""
 test_ip                 = ""
 prod_host_name          = ""
@@ -17,6 +18,7 @@ Vagrant.configure("2") do |config|
     config.vm.define "local", primary: true do |local|
 
         local.vm.box = "parallels/ubuntu-12.04" # change this to any box you want
+        local.vm.hostname = local_host_name
 
         local.vm.network :private_network, ip: "192.168.33.102"
 
@@ -25,7 +27,8 @@ Vagrant.configure("2") do |config|
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
                 server_name: "192.168.33.102",
-                application_env: "development"
+                application_env: "development",
+                host_name: local_host_name
             }
             ansible.playbook = "ansible/playbook.yml"
         end
@@ -53,7 +56,8 @@ Vagrant.configure("2") do |config|
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
                 server_name: test_ip,
-                application_env: "testing"
+                application_env: "testing",
+                host_name: test_host_name
             }
             ansible.playbook = "ansible/playbook.yml"
         end
@@ -81,7 +85,8 @@ Vagrant.configure("2") do |config|
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
                 server_name: prod_ip,
-                application_env: "prod"
+                application_env: "prod",
+                host_name: prod_host_name
             }
             ansible.playbook = "ansible/playbook.yml"
         end
