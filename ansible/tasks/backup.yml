@@ -1,0 +1,28 @@
+---
+- name: make sure www-data home directory exists
+  file: path=/var/www owner=www-data group=www-data mode=0700 state=directory
+
+- name: backups | copy file backup script
+  template: src=files/backup/file-backup.sh dest=/var/www owner=www-data group=www-data mode=0700
+
+- name: backups | copy database backup script
+  template: src=files/backup/database-backup.sh dest=/var/www owner=www-data group=www-data mode=0700
+
+- name: backups | configure s3cmd
+  template: src=files/backup/s3-config dest=/var/www/.s3cfg owner=www-data group=www-data mode=0700
+
+- name: backups | setup cron for daily file
+  cron: name="daily file backup" minute="0" hour="0" job="/var/www/file-backup.sh daily" user=www-data
+
+- name: backups | setup cron for weekly file
+  cron: name="weekly file backup" weekday="1" minute="0" hour="0" job="/var/www/file-backup.sh weekly" user=www-data
+
+- name: backups | setup cron for constant db
+  cron: name="constant db backup" minute="*/30" job="/var/www/database-backup.sh" user=www-data
+
+- name: backups | setup cron for daily db
+  cron: name="daily db backup" minute="0" hour="0" job="/var/www/database-backup.sh daily" user=www-data
+
+- name: backups | setup cron for weekly db
+  cron: name="weekly db backup" weekday="1" minute="0" hour="0" job="/var/www/database-backup.sh weekly" user=www-data
+
