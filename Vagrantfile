@@ -1,5 +1,5 @@
 # all the variables you need to set are listed here
-box_name                = ""
+box_name                = "" # an arbitrary name to call your local VM
 local_host_name         = ""
 test_host_name          = ""
 test_ip                 = ""
@@ -8,6 +8,9 @@ prod_ip                 = ""
 digital_ocean_client_id = ""
 digital_ocean_api_key   = ""
 
+# previous comment is not really true
+# you will likely want to set the box type/image types below too
+# you may also want to control the Digital Ocean region or VM sizes too
 Vagrant.configure("2") do |config|
 
     # parallels is optional, feel free to use virtualbox for local dev
