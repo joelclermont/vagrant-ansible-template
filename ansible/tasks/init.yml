@@ -23,3 +23,6 @@
 
 - name: init | Update apt
   apt: update_cache=yes
+
+- name: init | Upgrade apt (safe)
+  apt: upgrade=safe
