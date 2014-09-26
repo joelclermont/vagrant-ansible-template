@@ -30,4 +30,5 @@
   with_items: mysql_db_names
 
 - name: setup application user
-  mysql_user: name={{ mysql_app_user }} password={{ mysql_app_pass }} priv={{ mysql_db_name }}.*:ALL state=present
+  mysql_user: name={{ mysql_app_user }} password={{ mysql_app_pass }} priv={{ item }}.*:ALL state=present
+  with_items: mysql_db_names
