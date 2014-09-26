@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
             provider.client_id = digital_ocean_client_id
             provider.api_key = digital_ocean_api_key
-            provider.image = "Ubuntu 12.04.4 x64"
+            provider.image = "Ubuntu 14.04 x64"
             provider.region = "San Francisco 1"
             provider.size = "1GB"
         end
@@ -80,7 +80,7 @@ Vagrant.configure("2") do |config|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
             provider.client_id = digital_ocean_client_id
             provider.api_key = digital_ocean_api_key
-            provider.image = "Ubuntu 12.04.4 x64"
+            provider.image = "Ubuntu 14.04 x64"
             provider.region = "New York 2"
             provider.size = "1GB"
         end
