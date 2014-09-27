@@ -91,7 +91,7 @@ Vagrant.configure("2") do |config|
         config.vm.provision "ansible" do |ansible|
             ansible.extra_vars = {
                 server_name: prod_ip,
-                application_env: "prod",
+                application_env: "production",
                 host_name: prod_host_name
             }
             ansible.playbook = "ansible/playbook.yml"
