@@ -26,3 +26,8 @@
 
 - name: init | Upgrade apt (safe)
   apt: upgrade=safe
+
+- name: Set /etc/timezone to {{ timezone }}
+  template: dest=/etc/timezone src=files/timezone.tpl
+  notify: update tzdata
+  when: ansible_os_family == "Debian"
