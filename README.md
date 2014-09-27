@@ -17,3 +17,5 @@ Steps to use:
 * Enter the values for variables toward the top of playbook.yml
 * Enter your public key in public_keys
 * Put a mysqldump in data/seed-database.sql if you want seed data
+
+Note: the Digital Ocean API has moved from v1 to v2, which changes how authentication works. If you want to use v2, make sure your DO vagrant plugin is up to date. If you want to stick with v1, comment out the token lines and uncomment the v1 lines.
