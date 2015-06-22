@@ -18,9 +18,9 @@
 - name: init | Add ppa Repository for composer
   apt_repository: repo='ppa:duggan/composer'
 
-- name: init | install compass
-  command: gem install compass creates=/usr/local/bin/compass
-
+- name: init | Add ppa Repository for nginx
+  apt_repository: repo='ppa:nginx/stable'
+  
 - name: init | Update apt
   apt: update_cache=yes
 
