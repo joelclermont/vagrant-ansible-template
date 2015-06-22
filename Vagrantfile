@@ -6,8 +6,6 @@ test_ip                 = ""
 prod_host_name          = ""
 prod_ip                 = ""
 digital_ocean_token     = "" # V2 API
-#digital_ocean_client_id = "" #for V1 API
-#digital_ocean_api_key   = "" #for V1 API
 
 # previous comment is not really true
 # you will likely want to set the box type/image types below too
@@ -21,7 +19,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "local", primary: true do |local|
 
-        local.vm.box = "parallels/ubuntu-12.04" # change this to any box you want
+        local.vm.box = "parallels/ubuntu-14.04" # change this to any box you want
         local.vm.hostname = local_host_name
 
         local.vm.network :private_network, ip: "192.168.33.102"
@@ -50,10 +48,8 @@ Vagrant.configure("2") do |config|
 
         test.vm.provider :digital_ocean do |provider, override|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
-            #provider.client_id = digital_ocean_client_id
-            #provider.api_key = digital_ocean_api_key
             provider.token = digital_ocean_token
-            provider.image = "Ubuntu 14.04 x64"
+            provider.image = "ubuntu-14-04-x64"
             provider.region = "sfo1"
             provider.size = "1GB"
         end
@@ -80,11 +76,9 @@ Vagrant.configure("2") do |config|
 
         prod.vm.provider :digital_ocean do |provider, override|
             override.ssh.private_key_path = "~/.ssh/id_rsa"
-            #provider.client_id = digital_ocean_client_id
-            #provider.api_key = digital_ocean_api_key
             provider.token = digital_ocean_token
-            provider.image = "Ubuntu 14.04 x64"
-            provider.region = nyc2"
+            provider.image = "ubuntu-14-04-x64"
+            provider.region = "nyc3"
             provider.size = "1GB"
         end
 
